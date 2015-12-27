@@ -41,9 +41,6 @@
 #if DISABLE_PS2_PORT == 1
 	External (_SB.PCI0.LPCB.SIO1, DeviceObj)
 #endif
-#if FIX_SHUTDOWN == 1
-	External (_SB.PCI0.LPCB.SPTS, MethodObj)
-#endif
 	External (_SB.PCI0.PEG0.GFX0, DeviceObj)
 #if DISABLE_PEG2_IDE == 1
 	External (_SB.PCI0.PEG2.MVL3, DeviceObj)
@@ -84,17 +81,6 @@
 		// _OSI must return true for all previous versions of Windows
 		Return (Match (WINV, MEQ, Arg0, MTR, Zero, Zero) != Ones)
 	}
-
-#if FIX_SHUTDOWN == 1
-	// Calls to _PTS in the DSDT are routed here
-	Method (_PTS, 1)
-	{
-		If ((Arg0) && (Arg0 != 0x05))
-		{
-			\_SB.PCI0.LPCB.SPTS (Arg0)
-		}
-	}
-#endif
 
 	Method (\_SB._INI)
 	{

@@ -1,6 +1,6 @@
 #define DISABLE_PEG2_IDE	1
 #define DISABLE_PS2_PORT	1
-#define FIX_SHUTDOWN		1
+#define DISABLE_USBX		1
 #define INTEL_GBE_DEVICE	\_SB.PCI0.ETH1
 
 DefinitionBlock ("SSDT-GA-Z77X-UD5H.aml", "SSDT", 2, "APPLE ", "General", 0x20151227)

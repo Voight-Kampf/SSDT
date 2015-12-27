@@ -4,7 +4,7 @@
 			{
 				If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
 				// 6 Series IGPUs on a 7 Series chipset require IMEI device ID faking in order to get the IGPU kexts to load
-				If ((^^IGPU.DID0 == 0x102) || (^^IGPU.DID0 == 0x112) || (^^IGPU.DID0 == 0x122) | (^^IGPU.DID0 == 0x10A))
+				If ((\_SB.PCI0.IGPU.DID0 == 0x102) || (\_SB.PCI0.IGPU.DID0 == 0x112) || (\_SB.PCI0.IGPU.DID0 == 0x122) | (\_SB.PCI0.IGPU.DID0 == 0x10A))
 				{
 					Return (Package () { "device-id", Buffer () { 0x3A, 0x1C, 0x00, 0x00 } })
 				}
@@ -27,7 +27,7 @@
 				If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
 				// If the device ID of PEG0.GFX0.VID0 is 8086, the IGPU is the primary graphics adapter
 				// We will inject the normal platform ID and fake device ID (if needed) to use the IGPU for display output
-				If (^^PEG0.GFX0.VID0 == 0x8086)
+				If (\_SB.PCI0.PEG0.GFX0.VID0 == 0x8086)
 				{
 					Store (Package ()
 					{
@@ -139,9 +139,9 @@
 				Method (_DSM, 4)
 				{
 					If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
-					If (^^GFX0.VID0 != 0xFFFF)
+					If (\_SB.PCI0.PEG0.GFX0.VID0 != 0xFFFF)
 					{
-						If (^^GFX0.VID0 == 0x8086)
+						If (\_SB.PCI0.PEG0.GFX0.VID0 == 0x8086)
 						{
 							Return (Package () { "hda-gfx", Buffer() { "onboard-2" } })
 						}
@@ -161,7 +161,7 @@
 			Method (_DSM, 4)
 			{
 				If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
-				If (^^PEG0.GFX0.VID0 == 0x8086)
+				If (\_SB.PCI0.PEG0.GFX0.VID0 == 0x8086)
 				{
 					Return (Package () { "hda-gfx", Buffer() { "onboard-1" } })
 				}
