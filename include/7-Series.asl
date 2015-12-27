@@ -291,7 +291,7 @@
 			Method (_DSM, 4)
 			{
 				If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
-				Return (PROP)
+				Return (RefOf (PROP))
 			}
 		}
 
@@ -303,7 +303,7 @@
 			Method (_DSM, 4)
 			{
 				If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
-				Return (\_SB.PCI0.EH01.PROP)
+				Return (RefOf (\_SB.PCI0.EH01.PROP))
 			}
 		}
 
@@ -316,7 +316,7 @@
 			{
 				If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
 				Store (0x00, Index (\_SB.PCI0.EH01.PROP, 0x07))
-				Return (\_SB.PCI0.EH01.PROP)
+				Return (RefOf (\_SB.PCI0.EH01.PROP))
 			}
 
 			Scope (RHUB)

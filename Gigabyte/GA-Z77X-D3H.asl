@@ -40,7 +40,7 @@ DefinitionBlock ("SSDT-GA-Z77X-D3H.aml", "SSDT", 2, "APPLE ", "General", 0x20151
 				{
 					If (Arg2 == Zero) { Return (Buffer() { 0x03 }) }
 					Store (0x00, Index (\_SB.PCI0.EH01.PROP, 0x07))
-					Return (\_SB.PCI0.EH01.PROP)
+					Return (RefOf (\_SB.PCI0.EH01.PROP))
 				}
 			}
 		}
