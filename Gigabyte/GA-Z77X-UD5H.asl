@@ -21,7 +21,7 @@ DefinitionBlock ("SSDT-GA-Z77X-UD5H.aml", "SSDT", 2, "APPLE ", "General", 0x2015
 	External (_SB.PCI0.RP07.PXSX, DeviceObj)
 	External (_SB.PCI0.RP08.PXSX, DeviceObj)
 
-	#include "../include/chipset/Z77.asl"
+	#include "../include/7-Series.asl"
 
 	Scope (\_SB.PCI0)
 	{

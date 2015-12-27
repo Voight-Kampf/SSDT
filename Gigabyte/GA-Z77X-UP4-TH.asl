@@ -11,7 +11,7 @@ DefinitionBlock ("SSDT-GA-Z77X-UP5-TH.aml", "SSDT", 2, "APPLE ", "General", 0x20
 	External (_SB.PCI0.RP05.PXSX, DeviceObj)
 	External (_SB.PCI0.RP07.PXSX, DeviceObj)
 
-	#include "../include/chipset/Z77.asl"
+	#include "../include/7-Series.asl"
 
 	Scope (\_SB.PCI0)
 	{
@@ -26,6 +26,8 @@ DefinitionBlock ("SSDT-GA-Z77X-UP5-TH.aml", "SSDT", 2, "APPLE ", "General", 0x20
 			{
 				Name (_ADR, Zero)
 				Alias (PW94, _PRW)
+				// Let AppleUSBODD know that USB SuperDrive is supported on this Mac (credit: Pike R. Alpha)
+				Name (MBSD, One)
 				Method (_DSM, 4)
 				{
 					If (Arg2 == Zero) { Return (Buffer() { 0x03 }) }
