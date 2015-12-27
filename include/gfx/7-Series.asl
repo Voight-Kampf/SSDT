@@ -83,6 +83,7 @@
 					}, Local4)
 				}
 
+				// Credit: RehabMan
 				Store (DID0, Local3)
 				Store (Zero, Local0)
 				Store (SizeOf (Local4), Local1)

@@ -23,7 +23,15 @@
 #if DISABLE_PEG2_IDE == 1
 	External (_SB.PCI0.PEG2, DeviceObj)
 #endif
-
+#if DISABLE_USBX == 1
+	External (_SB.PCI0.USB1, DeviceObj)
+	External (_SB.PCI0.USB2, DeviceObj)
+	External (_SB.PCI0.USB3, DeviceObj)
+	External (_SB.PCI0.USB4, DeviceObj)
+	External (_SB.PCI0.USB5, DeviceObj)
+	External (_SB.PCI0.USB6, DeviceObj)
+	External (_SB.PCI0.USB7, DeviceObj)
+#endif
 	External (_SB.PCI0.SAT1, DeviceObj)
 	External (_SB.PCI0.SBUS, DeviceObj)
 	External (_SB.PCI0.WMI1, DeviceObj)
@@ -76,6 +84,17 @@
 		// _OSI must return true for all previous versions of Windows
 		Return (Match (WINV, MEQ, Arg0, MTR, Zero, Zero) != Ones)
 	}
+
+#if FIX_SHUTDOWN == 1
+	// Calls to _PTS in the DSDT are routed here
+	Method (_PTS, 1)
+	{
+		If ((Arg0) && (Arg0 != 0x05))
+		{
+			\_SB.PCI0.LPCB.SPTS (Arg0)
+		}
+	}
+#endif
 
 	Method (\_SB._INI)
 	{
@@ -174,6 +193,17 @@
 #endif
 		}
 
+#if DISABLE_USBX == 1
+		// Disabling the USBx devices
+		Scope (USB1) { Name (_STA, Zero) }
+		Scope (USB2) { Name (_STA, Zero) }
+		Scope (USB3) { Name (_STA, Zero) }
+		Scope (USB4) { Name (_STA, Zero) }
+		Scope (USB5) { Name (_STA, Zero) }
+		Scope (USB6) { Name (_STA, Zero) }
+		Scope (USB7) { Name (_STA, Zero) }
+#endif
+
 		// Disabling the SAT1 device
 		Scope (SAT1) { Name (_STA, Zero) }
 
@@ -188,6 +218,11 @@
 				{
 					Name (_ADR, Zero)
 					Name (_CID, "smbus-blc")
+					Method (_DSM, 4)
+					{
+						If (Arg2 == Zero) { Return (Buffer () { 0x03 }) }
+						Return (Package() { "address", 0x2C })
+					}
 				}
 			}
 		}
@@ -205,13 +240,3 @@
 		Scope (FAN3) { Name (_STA, Zero) }
 		Scope (FAN4) { Name (_STA, Zero) }
 	}
-
-#if FIX_SHUTDOWN == 1
-	Method (_PTS, 1)
-	{
-		If ((Arg0) && (Arg0 != 0x05))
-		{
-			\_SB.PCI0.LPCB.SPTS (Arg0)
-		}
-	}
-#endif
