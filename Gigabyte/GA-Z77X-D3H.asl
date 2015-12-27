@@ -5,14 +5,12 @@ DefinitionBlock ("SSDT-GA-Z77X-D3H.aml", "SSDT", 2, "APPLE ", "General", 0x20151
 	External (_SB.PCI0, DeviceObj)
 
 	External (_SB.PCI0.RP05, DeviceObj)
-	External (_SB.PCI0.RP06, DeviceObj)
 	External (_SB.PCI0.RP07, DeviceObj)
 	External (_SB.PCI0.RP08, DeviceObj)
 
 	External (_SB.PCI0.RP05.MVL1, DeviceObj)
 	External (_SB.PCI0.RP05.MVL2, DeviceObj)
 	External (_SB.PCI0.RP05.PXSX, DeviceObj)
-	External (_SB.PCI0.RP06.PXSX, DeviceObj)
 	External (_SB.PCI0.RP07.PXSX, DeviceObj)
 	External (_SB.PCI0.RP08.PXSX, DeviceObj)
 
@@ -42,18 +40,6 @@ DefinitionBlock ("SSDT-GA-Z77X-D3H.aml", "SSDT", 2, "APPLE ", "General", 0x20151
 					Store (0x00, Index (\_SB.PCI0.EH01.PROP, 0x07))
 					Return (RefOf (\_SB.PCI0.EH01.PROP))
 				}
-			}
-		}
-
-		Scope (RP06)
-		{
-			// Disabling the PXSX device
-			Scope (PXSX) { Name (_STA, Zero) }
-			// Adding a new ARPT device
-			Device (ARPT)
-			{
-				Name (_ADR, Zero)
-				Alias (PW94, _PRW)
 			}
 		}
 
